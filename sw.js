@@ -1,14 +1,13 @@
 /* Shiftly - uso senza connessione.
    Pagina principale: prima la rete (così gli aggiornamenti arrivano), se manca la rete usa la copia salvata.
-   Librerie e icone: copia salvata. I dati dell'utente non passano da qui. */
-const VERSION = "v13";
+   Icone: copia salvata. I dati dell'utente non passano da qui. */
+const VERSION = "v14";
 const CACHE = "shiftly-" + VERSION;
 const PRECACHE = ["./", "./index.html", "./manifest.webmanifest",
-  "./icons/icon-180.png", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-maskable-512.png",
-  "./vendor/jszip.min.js", "./vendor/pdfjs/pdf.min.js", "./vendor/pdfjs/pdf.worker.min.js"];
+  "./icon-180.png", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(PRECACHE)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(c => Promise.all(PRECACHE.map(u => c.add(u).catch(() => {})))).then(() => self.skipWaiting()));
 });
 self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => (k.indexOf("shiftly-") === 0 || k.indexOf("turnigtt-") === 0) && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
