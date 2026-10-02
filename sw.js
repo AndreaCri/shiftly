@@ -1,7 +1,7 @@
 /* Shiftly - uso senza connessione.
    Pagina principale: prima la rete (così gli aggiornamenti arrivano), se manca la rete usa la copia salvata.
    Icone: copia salvata. I dati dell'utente non passano da qui. */
-const VERSION = "v14";
+const VERSION = "v15";
 const CACHE = "shiftly-" + VERSION;
 const PRECACHE = ["./", "./index.html", "./manifest.webmanifest",
   "./icon-180.png", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
